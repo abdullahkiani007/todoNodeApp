@@ -1,6 +1,6 @@
 # Full Stack Todo List app 
 ---
-**Techologies Used: **
+**Techologies Used:**
 1. Node Js 
 2. Express Js
 3. React Js
