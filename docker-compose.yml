@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGO_URI=mongodb+srv://abdullah:abdullah@mongo@nodeexpressproject.u8zsdbj.mongodb.net/?retryWrites=true&w=majority
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=abdullah
+      - MONGO_INITDB_ROOT_PASSWORD=abdullah@mongo
+
+  frontend:
+    image: node:16
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+    command: bash -c "npm install && npm run start"
+    depends_on:
+      - backend
+
+volumes:
+  mongo-data:
